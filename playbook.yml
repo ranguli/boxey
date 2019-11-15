@@ -1,0 +1,32 @@
+---
+- hosts: all
+  remote_user: root
+
+  tasks:
+    # Note that we become superuser for installing apt packages
+    - name: Install apt packages 
+      become: true
+      apt:
+        # Perform the equivalent of an apt-update:
+        update_cache: yes
+        pkg: 
+        - python3-apt
+        - python3-pip
+        - vim
+        - git
+        - htop
+        - build-essential
+    
+    - name: Clone dotfiles repo
+      git:
+        key_file: ~/.ssh/id_rsa
+        accept_hostkey: true
+        repo: git@github.com:ranguli/gentoo.git
+        dest: ~/dotfiles 
+
+    - name: Install some tools that are distributed via pip
+      pip:
+        executable: pip3
+        name:
+          - awscli
+
