@@ -1,8 +1,11 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.box = "ubuntu/xenial64"
+    config.vm.box = "ubuntu/bionic64"
     config.vm.hostname = "boxey"
-   
+  
+    # Share my projects directory with the VM
+    config.vm.synced_folder "../", "/home/vagrant/projects"
+ 
     # Tell Vagrant not to insert its own SSH key. 
     config.ssh.insert_key = false 
 

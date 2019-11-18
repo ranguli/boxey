@@ -12,10 +12,21 @@
         pkg: 
         - python3-apt
         - python3-pip
+        - zsh
         - vim
+        - tmux
         - git
         - htop
         - build-essential
+        - stow
+        - curl
+
+        # Docker 
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
     
     - name: Clone dotfiles repo
       git:
@@ -24,9 +35,27 @@
         repo: git@github.com:ranguli/gentoo.git
         dest: ~/dotfiles 
 
+    - name: Stow dotfiles
+      shell: cd ~/dotfiles && stow vim tmux ssh git 
+
+    - name: Install Vim plugins 
+      shell: vim +PlugInstall +qall
+
+    - name: Do that docker thing 
+      include: docker.yml
+    
+    - name: Do that node thing 
+      include: nodejs.yml
+
     - name: Install some tools that are distributed via pip
       pip:
         executable: pip3
         name:
           - awscli
+    
+    - name: Install some tools that are distributed via npm 
+      become: true
+      npm:
+        global: true 
+        name: serverless
 
