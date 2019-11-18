@@ -19,6 +19,7 @@
         - htop
         - build-essential
         - stow
+        - wget
         - curl
         - pass
 
@@ -29,6 +30,22 @@
         - gnupg-agent
         - software-properties-common
 
+        # Requisites for pyenv
+        - make 
+        - libssl-dev 
+        - zlib1g-dev 
+        - libbz2-dev
+        - libreadline-dev 
+        - libsqlite3-dev 
+        - llvm 
+        - libncurses5-dev 
+        - libncursesw5-dev
+        - xz-utils 
+        - tk-dev 
+        - libffi-dev 
+        - liblzma-dev 
+        - python-openssl
+
     - name: Clone dotfiles repo
       git:
         key_file: ~/.ssh/id_rsa
@@ -37,7 +54,13 @@
         dest: ~/dotfiles 
 
     - name: Stow dotfiles
-      shell: cd ~/dotfiles && stow vim tmux ssh git 
+      shell: cd ~/dotfiles && stow vim tmux ssh git zsh
+
+    - name: Set zsh as the default shell
+      become: true
+      user:
+        name: vagrant
+        shell: /bin/zsh
 
     - name: Install Vim plugins 
       shell: vim +PlugInstall +qall
@@ -51,15 +74,16 @@
     - name: Install some tools that are distributed via pip
       pip:
         executable: pip3
-        name:
-          - awscli
-    
+        name: 
+        - awscli
+        - pipenv
+
     - name: Install some tools that are distributed via npm
       become: true
       npm:
         global: true
         name: serverless
-
+    
     - name: Add the Golang repository
       become: true
       apt_repository:
@@ -73,6 +97,10 @@
         update_cache: yes
 
     - name: Install pyenv
-      git:
-        repo: https://github.com/pyenv/pyenv.git
-        dest: ~/.pyenv
+      shell: rm -fr ~/.pyenv && curl https://pyenv.run | bash
+
+    - name: Install pyenv-virtualenv
+      become: true
+      git: 
+        repo: https://github.com/pyenv/pyenv-virtualenv.git 
+        dest: ~/.pyenv/plugins/pyenv-virtualenv

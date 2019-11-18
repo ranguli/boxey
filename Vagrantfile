@@ -1,7 +1,10 @@
 Vagrant.configure("2") do |config|
-
     config.vm.box = "ubuntu/bionic64"
     config.vm.hostname = "boxey"
+
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 6000
+    end
   
     # Share my projects directory with the VM
     config.vm.synced_folder "../", "/home/vagrant/projects"
