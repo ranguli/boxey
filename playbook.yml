@@ -29,9 +29,6 @@
         - gnupg-agent
         - software-properties-common
 
-    - name: Install oh-my-zsh
-      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
     - name: Clone dotfiles repo
       git:
         key_file: ~/.ssh/id_rsa
@@ -78,4 +75,4 @@
     - name: Install pyenv
       git:
         repo: https://github.com/pyenv/pyenv.git
-        dist: ~/.pyenv
+        dest: ~/.pyenv
