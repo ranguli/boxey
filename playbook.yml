@@ -30,7 +30,7 @@
         - gnupg-agent
         - software-properties-common
 
-        # Requisites for pyenv
+        # TODO: See if Pyenv will still work if we remove these deps        
         - make 
         - libssl-dev 
         - zlib1g-dev 
