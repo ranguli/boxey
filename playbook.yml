@@ -1,6 +1,9 @@
 ---
 - hosts: all
   remote_user: root
+  vars:
+    terraform_version: 0.11.3
+  
 
   tasks:
     # Note that we become superuser for installing apt packages
@@ -22,6 +25,7 @@
         - wget
         - curl
         - pass
+        - unzip
 
         # Docker 
         - apt-transport-https
@@ -30,7 +34,7 @@
         - gnupg-agent
         - software-properties-common
 
-        # TODO: See if Pyenv will still work if we remove these deps        
+        # TODO: See if Pyenv will still work if we remove these deps
         - make 
         - libssl-dev 
         - zlib1g-dev 
@@ -60,6 +64,7 @@
       become: true
       user:
         name: vagrant
+        groups: admin, docker
         shell: /bin/zsh
 
     - name: Install Vim plugins 
@@ -70,6 +75,9 @@
     
     - name: Do that node thing 
       include: nodejs.yml
+    
+    - name: Do that terraform thing 
+      include: terraform.yml
 
     - name: Install some tools that are distributed via pip
       pip:
@@ -104,3 +112,5 @@
       git: 
         repo: https://github.com/pyenv/pyenv-virtualenv.git 
         dest: ~/.pyenv/plugins/pyenv-virtualenv
+
+

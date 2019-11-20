@@ -42,3 +42,10 @@
   shell: chmod +x /usr/local/bin/docker-compose
   args:
     warn: false
+
+- name: Enable and start the docker systemd service
+  systemd:
+    state: started
+    enabled: yes
+    name: docker
+ 
