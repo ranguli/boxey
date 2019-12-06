@@ -7,7 +7,8 @@ Vagrant.configure("2") do |config|
     # is for the time being an acceptable security risk. 
 
     config.vm.network "forwarded_port", guest: 3333, host: 3333, host_ip: "127.0.0.1"
-    config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 443, host: 4430, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
 
     config.vm.provider "virtualbox" do |v|
       v.memory = 6000
@@ -25,6 +26,6 @@ Vagrant.configure("2") do |config|
     # Provision the Vagrant box with Ansible. 
     config.vm.provision "ansible_local" do |ansible|
         #ansible.verbose = "v"
-        ansible.playbook = "playbook.yml"
+        ansible.playbook = "provisioning/playbook.yml"
     end
 end

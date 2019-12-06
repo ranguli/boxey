@@ -4,7 +4,6 @@
   vars:
     terraform_version: 0.11.3
   
-
   tasks:
     # Note that we become superuser for installing apt packages
     - name: Install apt packages 
@@ -26,6 +25,7 @@
         - curl
         - pass
         - unzip
+        - libnss3-tools
 
         # Docker 
         - apt-transport-https
@@ -58,14 +58,7 @@
         dest: ~/dotfiles 
 
     - name: Stow dotfiles
-      shell: cd ~/dotfiles && stow vim tmux ssh git zsh
-
-    - name: Set zsh as the default shell
-      become: true
-      user:
-        name: vagrant
-        groups: admin, docker
-        shell: /bin/zsh
+      shell: cd ~/dotfiles && stow --adopt vim tmux ssh git zsh
 
     - name: Install Vim plugins 
       shell: vim +PlugInstall +qall
@@ -78,6 +71,13 @@
     
     - name: Do that terraform thing 
       include: terraform.yml
+    
+    - name: Set zsh as the default shell
+      become: true
+      user:
+        name: vagrant
+        groups: admin, docker
+        shell: /bin/zsh
 
     - name: Install some tools that are distributed via pip
       pip:
@@ -112,5 +112,3 @@
       git: 
         repo: https://github.com/pyenv/pyenv-virtualenv.git 
         dest: ~/.pyenv/plugins/pyenv-virtualenv
-
-
