@@ -60,9 +60,6 @@
     - name: Stow dotfiles
       shell: cd ~/dotfiles && stow --adopt vim tmux ssh git zsh
 
-    - name: Install Vim plugins 
-      shell: vim +PlugInstall +qall
-
     - name: Do that docker thing 
       include: docker.yml
     
