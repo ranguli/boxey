@@ -14,6 +14,8 @@ Vagrant.configure("2") do |config|
   
     # Share my projects directory with the VM
     config.vm.synced_folder "../", "/home/vagrant/projects"
+    config.vm.synced_folder "../../dotfiles", "/home/vagrant/dotfiles"
+    config.vm.synced_folder "./", "/boxey"
  
     # Tell Vagrant not to insert its own SSH key. 
     config.ssh.insert_key = false 
@@ -24,6 +26,6 @@ Vagrant.configure("2") do |config|
     # Provision the Vagrant box with Ansible. 
     config.vm.provision "ansible_local" do |ansible|
         #ansible.verbose = "v"
-        ansible.playbook = "provisioning/playbook.yml"
+        ansible.playbook = "/boxey/provisioning/playbook.yml"
     end
 end
