@@ -50,6 +50,8 @@
         - liblzma-dev 
         - python-openssl
 
+        - python3-venv
+
     - name: Clone dotfiles repo
       git:
         key_file: ~/.ssh/id_rsa
@@ -60,8 +62,8 @@
     - name: Stow dotfiles
       shell: cd ~/dotfiles && stow --adopt vim tmux ssh git zsh
 
-    - name: Install Vim plugins 
-      shell: vim +PlugInstall +qall
+    #- name: Install Vim plugins 
+    #  shell: vim +PlugInstall +qall
 
     - name: Do that docker thing 
       include: docker.yml
@@ -85,6 +87,7 @@
         name: 
         - awscli
         - pipenv
+        - poetry
 
     - name: Install some tools that are distributed via npm
       become: true
@@ -106,6 +109,9 @@
 
     - name: Install pyenv
       shell: rm -fr ~/.pyenv && curl https://pyenv.run | bash
+    
+    - name: Install aws-vault 
+      shell: go get github.com/99designs/aws-vault
 
     - name: Install pyenv-virtualenv
       become: true

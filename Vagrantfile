@@ -6,9 +6,7 @@ Vagrant.configure("2") do |config|
     # locally on the machine it is running from, forwarding ports liberally
     # is for the time being an acceptable security risk. 
 
-    config.vm.network "forwarded_port", guest: 3333, host: 3333, host_ip: "127.0.0.1"
-    config.vm.network "forwarded_port", guest: 443, host: 4430, host_ip: "127.0.0.1"
-    config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 8000, host: 8080, host_ip: "127.0.0.1"
 
     config.vm.provider "virtualbox" do |v|
       v.memory = 6000
