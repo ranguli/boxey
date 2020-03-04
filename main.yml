@@ -9,11 +9,11 @@
     - name: Install apt packages 
       become: true
       apt:
-        # Perform the equivalent of an apt-update:
         update_cache: yes
         pkg: 
         - python3-apt
         - python3-pip
+        - python3-venv
         - zsh
         - vim
         - tmux
@@ -37,26 +37,35 @@
         # TODO: See if Pyenv will still work if we remove these deps
         - make 
         - libssl-dev 
-        - zlib1g-dev 
         - libbz2-dev
         - libreadline-dev 
         - libsqlite3-dev 
         - llvm 
         - libncurses5-dev 
         - libncursesw5-dev
-        - xz-utils 
         - tk-dev 
         - libffi-dev 
         - liblzma-dev 
         - python-openssl
 
-        - python3-venv
+        # Things needed for a haskell env
+        - libicu-dev 
+ 		- libtinfo-dev 
+		- libgmp-dev 
+		- libc6-dev 
+		- libffi-dev 
+		- g++ 
+		- gcc 
+		- make 
+		- xz-utils 
+		- zlib1g-dev 
+		- gnupg 
 
     - name: Clone dotfiles repo
       git:
         key_file: ~/.ssh/id_rsa
         accept_hostkey: true
-        repo: git@github.com:ranguli/gentoo.git
+        repo: git@github.com:ranguli/dotfiles.git
         dest: ~/dotfiles 
 
     - name: Stow dotfiles
@@ -70,6 +79,9 @@
     
     - name: Do that terraform thing 
       include: terraform.yml
+
+    - name: Do that Haskell thing (+ install tools written in Haskell)
+      include: haskell.yml
     
     - name: Set zsh as the default shell
       become: true
@@ -78,7 +90,7 @@
         groups: admin, docker
         shell: /bin/zsh
 
-    - name: Install some tools that are distributed via pip
+    - name: Install tools from pip
       pip:
         executable: pip3
         name: 
@@ -86,13 +98,13 @@
         - pipenv
         - poetry
 
-    - name: Install some tools that are distributed via npm
+    - name: Install tools from npm
       become: true
       npm:
         global: true
         name: serverless
     
-    - name: Add the Golang repository
+    - name: Add the Golang PPA 
       become: true
       apt_repository:
         repo: ppa:longsleep/golang-backports
