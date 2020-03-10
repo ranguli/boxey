@@ -50,16 +50,16 @@
 
         # Things needed for a haskell env
         - libicu-dev 
- 		- libtinfo-dev 
-		- libgmp-dev 
-		- libc6-dev 
-		- libffi-dev 
-		- g++ 
-		- gcc 
-		- make 
-		- xz-utils 
-		- zlib1g-dev 
-		- gnupg 
+        - libtinfo-dev 
+        - libgmp-dev 
+        - libc6-dev 
+        - libffi-dev 
+        - g++ 
+        - gcc 
+        - make 
+        - xz-utils 
+        - zlib1g-dev 
+        - gnupg 
 
     - name: Clone dotfiles repo
       git:

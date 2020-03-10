@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
-    config.vm.box = "ubuntu/bionic64"
+    config.vm.box = "debian/contrib-buster64"
     config.vm.hostname = "boxey"
+    config.disksize.size = '50GB'
 
     # Because this is a local development machine that does is only accessible
     # locally on the machine it is running from, forwarding ports liberally

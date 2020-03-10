@@ -2,8 +2,7 @@
   shell: curl -sSL https://get.haskellstack.org | sh
 
 - name: Install Cabal and Haskell via Stack
-  shell: 
-    - stack install cabal-install 
+  shell: stack install cabal-install 
 
 - name: Update Cabal
   shell: cabal-update
